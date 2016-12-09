@@ -79,7 +79,7 @@ int GPIOClass::setval_gpio(string val)
 	ofstream setvalgpio(setval_str.c_str());
 					// Open value file for GPIO
 	if (!setvalgpio){
-		cout << "ERROR: Unable to set vale of GPIO" << this->gpionum << "." << endl;
+		cout << "ERROR: Unable to set value of GPIO" << this->gpionum << "." << endl;
 		return -1;
 	}
 
