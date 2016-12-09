@@ -21,6 +21,10 @@ all : $(OBJECT)
 $(addprefix $(OBJECTDIR)/, GPIOtest1.o) : $(addprefix $(SOURCEDIR)/, GPIOtest1.cpp GPIOClass.cpp)
 	$(COMPILER) $(CFLAGS) -o $(addprefix $(OBJECTDIR)/, GPIOtest1.o) $?
 
+
+$(addprefix $(OBJECTDIR)/, GPIOtest0.o) : $(addprefix $(SOURCEDIR)/, GPIOtest0.cpp GPIOClass.cpp)
+	$(COMPILER) $(CFLAGS) -o $(addprefix $(OBJECTDIR)/, GPIOtest0.o) $?
+
 $(OBJECT) : | $(OBJECTDIR)
 
 $(OBJECTDIR) :
