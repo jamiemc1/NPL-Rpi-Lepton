@@ -35,7 +35,7 @@ int main(void)
 
 	while (1)
 	{
-		gpio4->setval_gpio("1")
+		gpio4->setval_gpio("1");
 	}
 
 /*	while (1)
