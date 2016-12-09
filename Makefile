@@ -10,7 +10,7 @@
 SOURCEDIR := src
 OBJECTDIR := bin
 SOURCE := $(addprefix $(SOURCEDIR)/, $(wildcard *.cpp) $(wildcard *.h))
-OBJECT := $(addprefix $(OBJECTDIR)/,GPIOtest1.o)
+OBJECT := $(addprefix $(OBJECTDIR)/,GPIOtest0.o GPIOtest1.o)
 COMPILER := g++
 CFLAGS := -std=c++0x \
 	  -Wpedantic
