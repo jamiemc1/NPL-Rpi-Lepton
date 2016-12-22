@@ -1,5 +1,5 @@
 #------------------------------------------	
-#	     GPIO Test Makefile
+#	    Lepton Test Makefile
 #------------------------------------------
 #
 #
@@ -10,7 +10,7 @@
 SOURCEDIR := src
 OBJECTDIR := bin
 SOURCE := $(addprefix $(SOURCEDIR)/, $(wildcard *.cpp) $(wildcard *.h))
-OBJECT := $(addprefix $(OBJECTDIR)/,GPIOtest0.o GPIOtest1.o)
+OBJECT := $(addprefix $(OBJECTDIR)/,LeptonRead.o)
 COMPILER := g++
 CFLAGS := -std=c++0x \
 	  -Wpedantic
@@ -18,12 +18,9 @@ CFLAGS := -std=c++0x \
 all : $(OBJECT)
 
 
-$(addprefix $(OBJECTDIR)/, GPIOtest1.o) : $(addprefix $(SOURCEDIR)/, GPIOtest1.cpp GPIOClass.cpp)
-	$(COMPILER) $(CFLAGS) -o $(addprefix $(OBJECTDIR)/, GPIOtest1.o) $?
+$(addprefix $(OBJECTDIR)/, LeptonRead.o) : $(addprefix $(SOURCEDIR)/, LeptonRead.cpp GPIOClass.cpp)
+	$(COMPILER) $(CFLAGS) -o $(addprefix $(OBJECTDIR)/, LeptonRead.o) $?
 
-
-$(addprefix $(OBJECTDIR)/, GPIOtest0.o) : $(addprefix $(SOURCEDIR)/, GPIOtest0.cpp GPIOClass.cpp)
-	$(COMPILER) $(CFLAGS) -o $(addprefix $(OBJECTDIR)/, GPIOtest0.o) $?
 
 $(OBJECT) : | $(OBJECTDIR)
 
