@@ -1,10 +1,10 @@
 //--------------------------------
-//	     GPIO Test 1
+//	    Lepton Read
 //--------------------------------
 //
 //	Provides a testbed for
 //	interacting with the
-//	Raspberry Pi through the
+//	FLIR Lepton through the
 //	GPIO pins.
 //
 //--------------------------------
@@ -22,43 +22,40 @@ using namespace std;
 int main(void)
 {
 	string inputstate;
-	GPIOClass* gpio4 = new GPIOClass("4");		// Create new GPIO object for GPIO4
-	GPIOClass* gpio17 = new GPIOClass("17");	// Create new GPIO object for GPIO17
 
-	gpio4->export_gpio();				// Export GPIO4
-	gpio17->export_gpio();				// Export GPIO17
+	GPIOClass* gpio08 = new GPIOClass("8");		// Create new GPIO object for GPIO08
+	GPIOClass* gpio09 = new GPIOClass("9");		// Create new GPIO object for GPIO09
+	GPIOClass* gpio10 = new GPIOClass("10");	// Create new GPIO object for GPIO10
+	GPIOClass* gpio11 = new GPIOClass("11");	// Create new GPIO object for GPIO11
+	
+	gpio08->export_gpio();				// Export GPIO08
+	gpio09->export_gpio();				// Export GPIO09
+	gpio10->export_gpio();				// Export GPIO10
+	gpio11->export_gpio();				// Export GPIO11
 	cout << "GPIO pins exported." << endl;
 
-	gpio4->setdir_gpio("out");			// Set GPIO4 to output
-	gpio17->setdir_gpio("in");			// Set GPIO17 to input
+	gpio08->setdir_gpio("in");			// Set GPIO08 to input
+	gpio09->setdir_gpio("in");			// Set GPIO09 to input
+	gpio10->setdir_gpio("in");			// Set GPIO10 to input
+	gpio11->setdir_gpio("in");			// Set GPIO11 to input
 	cout << "GPIO pin directions set." << endl;
 
 	while (1)
 	{
-		usleep(500000);				// Wait for 0.5 seconds
-		gpio17->getval_gpio(inputstate);	// Read state of GPIO17 input pin
-		cout << "Current input pin state is " << inputstate << endl;
-		if (inputstate == "0")			// If input is "0" (i.e. button pressed)
-		{
-			cout << "Input pin state is pressed.\nWill check input pin state in 20 milliseconds." << endl;
-			usleep(20000);
-			gpio17->getval_gpio(inputstate);
-							// Checking again to identify it is not noise
-			if (inputstate == "0")
-			{
-				cout << "Input pin state is definitely pressed.\nTurning LED on." << endl;
-				gpio4->setval_gpio("1");
-							// Turn LED on
-			cout << "Waiting until pin is released..." << endl;
-			while (inputstate == "0"){
-				gpio17->getval_gpio(inputstate);
-			};
-			cout << "Pin is released." << endl;
-			}
-			else
-				cout << "Input pin state is definitely released." << endl;
-		}
-		gpio4->setval_gpio("0");
+		usleep(2000000);				// Wait for 2 seconds
+
+		gpio08->getval_gpio(inputstate);	// Read state of GPIO08 input pin
+		cout << "Current input pin GPIO08 state is " << inputstate << endl;
+
+		gpio09->getval_gpio(inputstate);	// Read state of GPIO09 input pin
+		cout << "Current input pin GPIO09 state is " << inputstate << endl;
+
+		gpio10->getval_gpio(inputstate);	// Read state of GPIO10 input pin
+		cout << "Current input pin GPIO10 state is " << inputstate << endl;
+
+		gpio11->getval_gpio(inputstate);	// Read state of GPIO11 input pin
+		cout << "Current input pin GPIO11 state is " << inputstate << endl;
+		cout << endl;
 	}
 	cout << "Exiting..." << endl;
 	return 0;
