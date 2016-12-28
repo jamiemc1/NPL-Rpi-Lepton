@@ -58,7 +58,7 @@ int main(void)
 	cout << "GPIO pin directions set." << endl;
 
 	gpio08->setval_gpio("0");			// Set CS low to select SPI chip 
-	clock_gpio(gpio09, 2);			// Start the Master clock
+	clock_gpio(gpio11, 2);			// Start the Master clock
 
 	cout << "Clock is running." << endl;
 /*
