@@ -10,7 +10,7 @@
 SOURCEDIR := src
 OBJECTDIR := bin
 SOURCE := $(addprefix $(SOURCEDIR)/, $(wildcard *.cpp) $(wildcard *.h))
-OBJECT := $(addprefix $(OBJECTDIR)/,LeptonRead.o)
+OBJECT := $(addprefix $(OBJECTDIR)/,LeptonReadSPI.o)
 COMPILER := g++
 CFLAGS := -std=c++0x \
 	  -Wpedantic
@@ -18,8 +18,8 @@ CFLAGS := -std=c++0x \
 all : $(OBJECT)
 
 
-$(addprefix $(OBJECTDIR)/, LeptonRead.o) : $(addprefix $(SOURCEDIR)/, LeptonRead.cpp GPIOClass.cpp)
-	$(COMPILER) $(CFLAGS) -o $(addprefix $(OBJECTDIR)/, LeptonRead.o) $?
+$(addprefix $(OBJECTDIR)/, LeptonReadSPI.o) : $(addprefix $(SOURCEDIR)/, LeptonReadSPI.cpp SPIClass.cpp)
+	$(COMPILER) $(CFLAGS) -o $(addprefix $(OBJECTDIR)/, LeptonReadSPI.o) $?
 
 
 $(OBJECT) : | $(OBJECTDIR)
