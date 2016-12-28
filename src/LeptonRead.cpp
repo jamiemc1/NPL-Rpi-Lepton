@@ -10,6 +10,7 @@
 //--------------------------------
 
 #include <chrono>
+#include <iomanip>
 
 #include <iostream>
 #include <unistd.h>
@@ -29,20 +30,17 @@ int clock_gpio( GPIOClass* gpio, int freq )
 	delay.tv_nsec = ((1/freq)*1000000000);
 	while (1)
 	{
-		high_resolution_clock::time_point up_t1 = high_resolution_clock::now();
+		high_resolution_clock::time_point t1 = high_resolution_clock::now();
 		gpio->setval_gpio("0");
 		//nanosleep(&delay, (struct timespec *)NULL);
-		high_resolution_clock::time_point up_t2 = high_resolution_clock::now();
 
-		high_resolution_clock::time_point down_t1 = high_resolution_clock::now();
 		gpio->setval_gpio("1");
 		//nanosleep(&delay, (struct timespec *)NULL);
-		high_resolution_clock::time_point down_t2 = high_resolution_clock::now();
+		high_resolution_clock::time_point t2 = high_resolution_clock::now();
 
-		auto duration_up = duration_cast<microseconds>(up_t2-up_t1).count();
-		auto duration_down = duration_cast<microseconds>(down_t2-down_t1).count();
+		auto duration = duration_cast<microseconds>(t2-t1).count();
 
-		cout << "Up: " << duration_up << "\t" << "Down: " << duration_down << "\r" << string(80, ' ') << "\r"; 
+		cout << "Time: " << setw(6) << duration << endl; 
 	}
 	return 0;
 }
