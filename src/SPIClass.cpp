@@ -125,6 +125,7 @@ int LeptonSPI::spiWriteRead( unsigned char *data, int length)
   }
 
   retVal = ioctl (this->spifd, SPI_IOC_MESSAGE(length), &spi);
+  cout << retVal << endl;
 
   if(retVal < 0)
   {
