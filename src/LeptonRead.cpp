@@ -10,6 +10,8 @@
 //--------------------------------
 
 
+#include <chrono>
+
 #include <iostream>
 #include <unistd.h>
 #include <time.h>
@@ -19,6 +21,21 @@
 #include "GPIOClass.h"
 using namespace std;
 
+
+template<typename TimeT = std::chrono::milliseconds>
+struct measure
+{
+	    template<typename F, typename ...Args>
+		        static typename TimeT::rep execution(F&& func, Args&&... args)
+			    {
+				            auto start = std::chrono::steady_clock::now();
+					            std::forward<decltype(func)>(func)(std::forward<Args>(args)...);
+						            auto duration = std::chrono::duration_cast< TimeT> 
+								                                (std::chrono::steady_clock::now() - start);
+							            return duration.count();
+								        }
+};
+
 int clock_gpio( GPIOClass* gpio, int freq )
 {
 	struct timespec delay = {0};
@@ -26,11 +43,11 @@ int clock_gpio( GPIOClass* gpio, int freq )
 	delay.tv_nsec = ((1/freq)*1000000000);
 	while (1)
 	{
-		gpio->setval_gpio("0");
-		nanosleep(&delay, (struct timespec *)NULL);
+		cout << "Up: " << measure<>::execution(gpio->setval_gpio("0")) << "\t";
+		//nanosleep(&delay, (struct timespec *)NULL);
 
-		gpio->setval_gpio("1");
-		nanosleep(&delay, (struct timespec *)NULL);
+		cout << "Down: " << measure<>::execution(gpio->setval_gpio("1")) << "\r";
+		//nanosleep(&delay, (struct timespec *)NULL);
 	}
 	return 0;
 }
