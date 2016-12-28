@@ -40,7 +40,7 @@ int clock_gpio( GPIOClass* gpio, int freq )
 
 		auto duration = duration_cast<microseconds>(t2-t1).count();
 
-		cout << "Time: " << setw(6) << duration << endl; 
+		cout << "Time: " << setw(6) << duration << "\r"; 
 	}
 	return 0;
 }
