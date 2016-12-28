@@ -9,7 +9,6 @@
 //
 //--------------------------------
 
-
 #include <chrono>
 
 #include <iostream>
@@ -20,21 +19,8 @@
 #include <stdlib.h>
 #include "GPIOClass.h"
 using namespace std;
+using namespace std::chrono;
 
-
-template<typename TimeT = std::chrono::milliseconds>
-struct measure
-{
-	    template<typename F, typename ...Args>
-		        static typename TimeT::rep execution(F&& func, Args&&... args)
-			    {
-				            auto start = std::chrono::steady_clock::now();
-					            std::forward<decltype(func)>(func)(std::forward<Args>(args)...);
-						            auto duration = std::chrono::duration_cast< TimeT> 
-								                                (std::chrono::steady_clock::now() - start);
-							            return duration.count();
-								        }
-};
 
 int clock_gpio( GPIOClass* gpio, int freq )
 {
@@ -43,11 +29,20 @@ int clock_gpio( GPIOClass* gpio, int freq )
 	delay.tv_nsec = ((1/freq)*1000000000);
 	while (1)
 	{
-		cout << "Up: " << measure<>::execution(gpio->setval_gpio("0")) << "\t";
+		high_resolution_clock::time_point up_t1 = high_resolution_clock::now();
+		gpio->setval_gpio("0");
 		//nanosleep(&delay, (struct timespec *)NULL);
+		high_resolution_clock::time_point up_t2 = high_resolution_clock::now();
 
-		cout << "Down: " << measure<>::execution(gpio->setval_gpio("1")) << "\r";
+		high_resolution_clock::time_point down_t1 = high_resolution_clock::now();
+		gpio->setval_gpio("1");
 		//nanosleep(&delay, (struct timespec *)NULL);
+		high_resolution_clock::time_point down_t2 = high_resolution_clock::now();
+
+		auto duration_up = duration_cast<microseconds>(up_t2-up_t1).count();
+		auto duration_down = duration_cast<microseconds>(down_t2-down_t1).count();
+
+		cout << "Up: " << duration_up << "\t" << "Down: " << duration_down << "\r"; 
 	}
 	return 0;
 }
