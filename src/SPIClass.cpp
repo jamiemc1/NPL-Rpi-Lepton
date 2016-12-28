@@ -106,7 +106,7 @@ int LeptonSPI::spiClose()
 int LeptonSPI::spiWriteRead( unsigned char *data, int length)
 {
 
-  struct spi_ioc_transfer spi[7];
+  struct spi_ioc_transfer spi[length];
   int i = 0;
   int retVal = -1;
 
