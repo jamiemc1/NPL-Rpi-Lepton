@@ -12,49 +12,57 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <time.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "GPIOClass.h"
 using namespace std;
 
+int clock_gpio( GPIOClass gpio, int freq )
+{
+	while (1)
+	{
+		gpio->setval_gpio("0");
+		nanosleep((1/freq)*1e9);
+
+		gpio->setval_gpio("1");
+		nanosleep((1/freq)*1e9);
+	}
+	return 0;
+}
+
 
 int main(void)
 {
 	string inputstate;
 
-	GPIOClass* gpio02 = new GPIOClass("2");		// Create new GPIO object for GPIO02
-	GPIOClass* gpio03 = new GPIOClass("3");		// Create new GPIO object for GPIO03
 	GPIOClass* gpio08 = new GPIOClass("8");		// Create new GPIO object for GPIO08
 	GPIOClass* gpio09 = new GPIOClass("9");		// Create new GPIO object for GPIO09
 	GPIOClass* gpio10 = new GPIOClass("10");	// Create new GPIO object for GPIO10
 	GPIOClass* gpio11 = new GPIOClass("11");	// Create new GPIO object for GPIO11
 	
-	gpio02->export_gpio();				// Export GPIO02
-	gpio03->export_gpio();				// Export GPIO03
 	gpio08->export_gpio();				// Export GPIO08
 	gpio09->export_gpio();				// Export GPIO09
 	gpio10->export_gpio();				// Export GPIO10
 	gpio11->export_gpio();				// Export GPIO11
 	cout << "GPIO pins exported." << endl;
 
-	gpio02->setdir_gpio("in");			// Set GPIO02 to input
-	gpio03->setdir_gpio("in");			// Set GPIO03 to input
-	gpio08->setdir_gpio("in");			// Set GPIO08 to input
+	gpio08->setdir_gpio("out");			// Set GPIO08 to output
 	gpio09->setdir_gpio("in");			// Set GPIO09 to input
-	gpio10->setdir_gpio("in");			// Set GPIO10 to input
-	gpio11->setdir_gpio("in");			// Set GPIO11 to input
+	gpio10->setdir_gpio("out");			// Set GPIO10 to output
+	gpio11->setdir_gpio("out");			// Set GPIO11 to output
 	cout << "GPIO pin directions set." << endl;
+
+	gpio08->setval_gpio("0");			// Set CS low to select SPI chip 
+	clock_gpio(gpio09, "16000000");			// Start the Master clock
+
+	cout << "Clock is running." << endl;
+/*
 
 	while (1)
 	{
 		usleep(2000000);				// Wait for 2 seconds
-
-		gpio02->getval_gpio(inputstate);	// Read state of GPIO02 input pin
-		cout << "Current input pin GPIO02 state is " << inputstate << endl;
-
-		gpio03->getval_gpio(inputstate);	// Read state of GPIO03 input pin
-		cout << "Current input pin GPIO03 state is " << inputstate << endl;
 
 		gpio08->getval_gpio(inputstate);	// Read state of GPIO08 input pin
 		cout << "Current input pin GPIO08 state is " << inputstate << endl;
@@ -71,4 +79,6 @@ int main(void)
 	}
 	cout << "Exiting..." << endl;
 	return 0;
+*/
+
 }
