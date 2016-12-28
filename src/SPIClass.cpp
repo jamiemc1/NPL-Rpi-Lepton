@@ -97,7 +97,7 @@ int LeptonSPI::spiClose()
 
 /*
 ------------------------------------------------------------------------
-	This function writes data "data" of length "length" to the
+	This function writes data "data" of length "6" to the
 	spidev device. Data shifted in from the spidev device is
 	saved back into "data".
 ------------------------------------------------------------------------
@@ -106,7 +106,7 @@ int LeptonSPI::spiClose()
 int LeptonSPI::spiWriteRead( unsigned char *data, int length)
 {
 
-  struct spi_ioc_transfer spi[length];
+  struct spi_ioc_transfer spi[6];
   int i = 0;
   int retVal = -1;
 
