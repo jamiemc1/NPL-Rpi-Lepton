@@ -42,7 +42,7 @@ int clock_gpio( GPIOClass* gpio, int freq )
 		auto duration_up = duration_cast<microseconds>(up_t2-up_t1).count();
 		auto duration_down = duration_cast<microseconds>(down_t2-down_t1).count();
 
-		cout << "Up: " << duration_up << "\t" << "Down: " << duration_down << "\r"; 
+		cout << "Up: " << duration_up << "\t" << "Down: " << duration_down << "\r" << string(80, ' ') << "\r"; 
 	}
 	return 0;
 }
