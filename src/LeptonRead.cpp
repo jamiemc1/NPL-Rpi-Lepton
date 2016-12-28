@@ -19,15 +19,18 @@
 #include "GPIOClass.h"
 using namespace std;
 
-int clock_gpio( GPIOClass gpio, int freq )
+int clock_gpio( GPIOClass* gpio, int freq )
 {
+	struct timespec delay = {0};
+	delay.tv_sec = 0;
+	delay.tv_nsec = ((1/freq)*1000000000);
 	while (1)
 	{
 		gpio->setval_gpio("0");
-		nanosleep((1/freq)*1e9);
+		nanosleep(&delay, (struct timespec *)NULL);
 
 		gpio->setval_gpio("1");
-		nanosleep((1/freq)*1e9);
+		nanosleep(&delay, (struct timespec *)NULL);
 	}
 	return 0;
 }
@@ -55,7 +58,7 @@ int main(void)
 	cout << "GPIO pin directions set." << endl;
 
 	gpio08->setval_gpio("0");			// Set CS low to select SPI chip 
-	clock_gpio(gpio09, "16000000");			// Start the Master clock
+	clock_gpio(gpio09, 2);			// Start the Master clock
 
 	cout << "Clock is running." << endl;
 /*
