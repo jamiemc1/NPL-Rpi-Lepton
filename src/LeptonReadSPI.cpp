@@ -23,6 +23,7 @@ int main(void)
 	data[1] = 0;
 	data[2] = 0;
 
+	cout << sizeof(data) << endl;
 	while (1)
 	{
 		lepton.spiWriteRead(data, sizeof(data));
