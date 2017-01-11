@@ -15,7 +15,7 @@ using namespace std;
 
 int main(void)
 {
-	LeptonSPI lepton("/dev/spidev0.0", SPI_MODE_0, 16000000, 8);
+	LeptonSPI lepton("/dev/spidev0.1", SPI_MODE_0, 16000000, 8);
 	int leptonVal = 0;
 	int leptonChannel = 0;
 	unsigned char data[3];
